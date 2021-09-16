@@ -2,23 +2,6 @@
 const fs = require("fs");
 const axios = require("axios");
 
-const artists = [
-    "Marina",
-    "Mark Rothko",
-    "Michael Heizer",
-    "Michelangelo Buonarroti",
-    "Norman Rockwell",
-    "Paul Gauguin",
-    "Picasso",
-    "Raphael",
-    "Richard Serra",
-    "Takashi Murakami",
-    "Tintoretto",
-    "Van Gogh",
-    "Wassily Kandinsky",
-    "Yayoi Kusama",
-    "Yves Klein",
-  ];
 
 // declare vars
 const client_id = "d7b5e06fed971b560f2f";
