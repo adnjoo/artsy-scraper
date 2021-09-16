@@ -2,22 +2,18 @@
 const fs = require("fs");
 const axios = require("axios");
 
+const artists = require('./randomartists')
 
 // declare vars
 const client_id = "d7b5e06fed971b560f2f";
 const client_secret = "92122aaf680fe0def89ce3bcc6d9d1d5";
 let apiUrl = "https://api.artsy.net/api/tokens/xapp_token";
-// apiUrl = encodeURI(apiUrl)
 let artist_id, artist_name;
 
-const readandwrite = (xyxy) => {
+const readandwrite = input => {
   fs.readFile("./artistdata.json", "utf-8", (err, jsonString) => {
     const data = JSON.parse(jsonString);
-    console.log(data.artists);
-    for (let i in data.artists) {
-      console.log(data.artists[i]);
-    }
-    data.artists.push(xyxy);
+    data.artists.push(input);
     write(JSON.stringify(data));
   });
 };
@@ -79,6 +75,3 @@ const thingy = async () => {
 };
 
 thingy()
-
-// getArtist('Cai Guo')
-// console.log(getArtist("van gogh"));
