@@ -1,3 +1,3 @@
 module.exports =[
-  "Salvador dali"
+  // "degas"
 ]
