@@ -1,16 +1,44 @@
-// require for Node, import for react
+// require for Node
 const fs = require("fs");
 const axios = require("axios");
-const artistdata = require("./artistdata");
 
-const readandwrite = () => {
+const artists = [
+    "Marina",
+    "Mark Rothko",
+    "Michael Heizer",
+    "Michelangelo Buonarroti",
+    "Norman Rockwell",
+    "Paul Gauguin",
+    "Picasso",
+    "Raphael",
+    "Richard Serra",
+    "Takashi Murakami",
+    "Tintoretto",
+    "Van Gogh",
+    "Wassily Kandinsky",
+    "Yayoi Kusama",
+    "Yves Klein",
+  ];
+
+// declare vars
+const client_id = "d7b5e06fed971b560f2f";
+const client_secret = "92122aaf680fe0def89ce3bcc6d9d1d5";
+let apiUrl = "https://api.artsy.net/api/tokens/xapp_token";
+// apiUrl = encodeURI(apiUrl)
+let artist_id, artist_name;
+
+const readandwrite = (xyxy) => {
   fs.readFile("./artistdata.json", "utf-8", (err, jsonString) => {
     const data = JSON.parse(jsonString);
-    console.log(data);
-    data["1"].id = 343656565;
+    console.log(data.artists);
+    for (let i in data.artists) {
+      console.log(data.artists[i]);
+    }
+    data.artists.push(xyxy);
     write(JSON.stringify(data));
   });
 };
+
 const write = (obj) => {
   fs.writeFile("./artistdata.json", obj, (err) => {
     if (err) {
@@ -20,11 +48,6 @@ const write = (obj) => {
     }
   });
 };
-
-const client_id = "d7b5e06fed971b560f2f";
-const client_secret = "92122aaf680fe0def89ce3bcc6d9d1d5";
-let apiUrl = "https://api.artsy.net/api/tokens/xapp_token";
-let artistId, artistName;
 
 const getArtist = async (input) => {
   const res = await axios.post(apiUrl, {
@@ -47,11 +70,17 @@ const getArtist = async (input) => {
       for (let i in res2.data._embedded.results) {
         if (res2.data._embedded.results[i].type === "artist") {
           console.log(res2.data._embedded.results[i].title);
-          artistName = res2.data._embedded.results[i].title;
-          artistId = res2.data._embedded.results[i]["_links"].self.href;
-          console.log(
-            artistId.slice(artistId.indexOf("artists/") + "artists/".length)
+          artist_name = res2.data._embedded.results[i].title;
+          artist_id = res2.data._embedded.results[i]["_links"].self.href;
+          artist_id = artist_id.slice(
+            artist_id.indexOf("artists/") + "artists/".length
           );
+          let obj = {
+            artist_name,
+            artist_id,
+          };
+          console.log(obj);
+          readandwrite(obj);
           return res2.data._embedded.results[i];
         }
       }
@@ -59,5 +88,14 @@ const getArtist = async (input) => {
 };
 
 
+const thingy = async () => {
+  for (let i in artists) {
+    let thing = await getArtist(artists[i]);
+    console.log(thing)
+  }
+};
 
-console.log(getArtist("pablo"));
+thingy()
+
+// getArtist('Cai Guo')
+// console.log(getArtist("van gogh"));
