@@ -1,7 +1,7 @@
 // require for Node
 const fs = require("fs");
 const axios = require("axios");
-
+const functions = require('./fs-functions')
 const artists = require('./randomartists')
 
 // declare vars
@@ -14,17 +14,7 @@ const readandwrite = input => {
   fs.readFile("./artistdata.json", "utf-8", (err, jsonString) => {
     const data = JSON.parse(jsonString);
     data.artists.push(input);
-    write(JSON.stringify(data));
-  });
-};
-
-const write = (obj) => {
-  fs.writeFile("./artistdata.json", obj, (err) => {
-    if (err) {
-      console.log(err);
-    } else {
-      console.log("file written");
-    }
+    functions.write(JSON.stringify(data));
   });
 };
 
