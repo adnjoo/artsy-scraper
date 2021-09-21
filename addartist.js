@@ -57,11 +57,11 @@ const getArtist = async (input) => {
 };
 
 
-const thingy = async () => {
+const addArtist = async () => {
   for (let i in artists) {
     let thing = await getArtist(artists[i]);
     console.log(thing)
   }
 };
 
-thingy()
+addArtist()
